@@ -20,7 +20,7 @@ class PostFactory(factory.Factory):
         model = posts.Post
 
     text = 'Sample post text'
-    timestamp = datetime.utcnow()
+    timestamp = datetime(2017, 1, 10)
 
 
 class TextPostFactory(PostFactory):

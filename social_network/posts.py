@@ -5,6 +5,7 @@ class Post(object):
     def __init__(self, text, timestamp=None):
         self.text = text
         self.timestamp = timestamp or datetime.utcnow()
+        self.user = None
 
     def set_user(self, user):
         self.user = user

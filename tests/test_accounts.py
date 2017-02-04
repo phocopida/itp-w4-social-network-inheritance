@@ -50,12 +50,12 @@ class TestUser(unittest.TestCase):
 
         # 2 posts from user2 and 1 from user3
         # post from user4 is excluded
-        self.assertEqual(len(user1.get_posts_by_followers()), 3)
+        self.assertEqual(len(user1.get_timeline()), 3)
 
-        self.assertFalse(user4_post1 in user1.get_posts_by_followers())
+        self.assertFalse(user4_post1 in user1.get_timeline())
 
         # should be sorted by creation timestamp
-        self.assertEqual(user1.get_posts_by_followers(), [
+        self.assertEqual(user1.get_timeline(), [
             user2_post1,
             user2_post2,
             user3_post1

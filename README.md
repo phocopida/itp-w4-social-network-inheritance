@@ -26,5 +26,71 @@ text.post.user == john  # Important!
 
 As you can see from our previous example, a post is created without a user. It's "orphan" we might say. But once we add that post to a user, the post's user attribute should be assigned.
 
+## Following users
+
+Users will be able to follow other users. The `follow` method is super simple:
+
 ```python
+john = User("John", "Lennon", "john@rmotr.com")
+paul = User("Paul", "McCartney", "paul@rmotr.com")
+
+john.follow(paul)
+print(john.followers)
+>>> [<User: "Paul McCartney">]
 ```
+
+## A user's timeline
+
+This is should be exactly like twitter. A user will have a timeline, that's just a list of posts created by other users that we're following, sorted by datetime (last first).
+
+```python
+john = User("John", "Lennon", "john@rmotr.com")
+paul = User("Paul", "McCartney", "paul@rmotr.com")
+george = User("George", "Harrison", "george@rmotr.com")
+
+john.follow(paul)
+john.follow(george)
+
+paul.add_post(TextPost("Post 1"))
+george.add_post(TextPost("Post 2"))
+paul.add_post(TextPost("Post 3"))
+
+print(john.get_timeline())
+>>> [<TextPost: Post 3>, <TextPost: Post 2>, <TextPost: Post 1>
+```
+
+## Reading Posts
+
+Finally, one of the most interesting use cases of this project is going to be realted to the "visual representation" of the posts. It's a great example of [Polymorphism](https://en.wikipedia.org/wiki/Polymorphism_(computer_science)). The concept is simple. If I try to print different types of posts, I'm going to get different representations. Example:
+
+
+```python
+john = User("John", "Lennon", "john@rmotr.com")
+post_1 = TextPost("All you need is love!")
+post_2 = PicturePost("Check my new submarine.", image_url='imgur.com/submarine.jpg')
+post_3 = CheckInPost("At Abbey Road Studios", latitude="19.111", longitude="-9.2222")
+john.add_post(post_1)
+john.add_post(post_2)
+john.add_post(post_3)
+
+print(post_1)
+"""
+John Lennon: "All you need is love!"
+  Friday, Feb 03, 2017
+"""
+
+print(post_2)
+"""
+John Lennon: "Check my new guitar"
+  Pic URL: imgur.com/guitar.png
+  Friday, Feb 03, 2017
+"""
+
+print(post_3)
+"""
+John Checked In: "At Abbey Road Studios"
+  19.111, -9.2222
+  Friday, Feb 03, 2017
+"""
+```
+**(check tests to see more examples)**
